@@ -36,6 +36,4 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAll() {
         return productDao.getAllProducts();
     }
-
-
 }

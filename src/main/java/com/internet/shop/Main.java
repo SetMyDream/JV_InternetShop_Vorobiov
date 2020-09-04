@@ -5,7 +5,7 @@ import com.internet.shop.model.Product;
 import com.internet.shop.service.ProductService;
 
 public class Main {
-   private static Injector injector = Injector.getInstance("com.internet.shop");
+    private static Injector injector = Injector.getInstance("com.internet.shop");
 
     public static void main(String[] args) {
         ProductService productService = (ProductService) injector.getInstance(ProductService.class);
@@ -21,7 +21,7 @@ public class Main {
         Product nokia5310 = new Product("Nokia 5310 Xpress Music", 110);
 
         nokia5310.setId(nokia5130.getId());
-        System.out.println(productService.getById(3l).getName());
+        System.out.println(productService.getById(3L).getName());
 
         productService.update(nokia5310);
         System.out.println(productService.getById(3L).getName());
