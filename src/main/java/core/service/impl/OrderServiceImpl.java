@@ -1,9 +1,11 @@
-package core.service;
+package core.service.impl;
 
 import core.dao.OrderDao;
 import core.lib.Inject;
 import core.lib.Service;
 import core.model.Order;
+import core.service.OrderService;
+
 import java.util.List;
 
 @Service

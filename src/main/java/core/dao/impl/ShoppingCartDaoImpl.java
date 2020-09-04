@@ -1,5 +1,6 @@
-package core.dao;
+package core.dao.impl;
 
+import core.dao.ShoppingCartDao;
 import core.db.Storage;
 import core.lib.Dao;
 import core.model.ShoppingCart;

@@ -1,9 +1,11 @@
-package core.service;
+package core.service.impl;
 
 import core.dao.ShoppingCartDao;
 import core.lib.Inject;
 import core.lib.Service;
 import core.model.ShoppingCart;
+import core.service.ShoppingCartService;
+
 import java.util.List;
 
 @Service

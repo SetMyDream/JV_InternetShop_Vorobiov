@@ -1,9 +1,11 @@
-package core.service;
+package core.service.impl;
 
 import core.dao.ProductDao;
 import core.lib.Inject;
 import core.lib.Service;
 import core.model.Product;
+import core.service.ProductService;
+
 import java.util.List;
 
 @Service

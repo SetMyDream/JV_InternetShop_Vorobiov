@@ -12,10 +12,10 @@ public class Storage {
     public static final List<Order> orders = new ArrayList<>();
     public static final List<User> users = new ArrayList<>();
     public static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
-    private static long productId;
-    private static long orderId;
-    private static long userId;
-    private static long shoppingCartId;
+    private static long productId = 0l;
+    private static long orderId = 0l;
+    private static long userId = 0l;
+    private static long shoppingCartId = 0l;
 
     public static void addProduct(Product product) {
         productId++;
