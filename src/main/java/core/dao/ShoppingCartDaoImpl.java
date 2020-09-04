@@ -1,11 +1,13 @@
 package core.dao;
 
 import core.db.Storage;
+import core.lib.Dao;
 import core.model.ShoppingCart;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+@Dao
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {

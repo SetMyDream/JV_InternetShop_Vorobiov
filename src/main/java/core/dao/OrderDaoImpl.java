@@ -1,10 +1,12 @@
 package core.dao;
 
 import core.db.Storage;
+import core.lib.Dao;
 import core.model.Order;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+@Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
