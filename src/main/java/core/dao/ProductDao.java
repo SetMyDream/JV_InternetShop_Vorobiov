@@ -1,7 +1,6 @@
 package core.dao;
 
 import core.model.Product;
-
 import java.util.List;
 import java.util.Optional;
 

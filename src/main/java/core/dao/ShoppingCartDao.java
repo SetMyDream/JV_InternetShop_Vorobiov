@@ -1,7 +1,6 @@
 package core.dao;
 
 import core.model.ShoppingCart;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -1,7 +1,6 @@
 package core.service;
 
 import core.model.ShoppingCart;
-
 import java.util.List;
 
 public interface ShoppingCartService {

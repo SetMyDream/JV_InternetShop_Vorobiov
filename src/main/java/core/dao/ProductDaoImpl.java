@@ -2,7 +2,6 @@ package core.dao;
 
 import core.db.Storage;
 import core.model.Product;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;

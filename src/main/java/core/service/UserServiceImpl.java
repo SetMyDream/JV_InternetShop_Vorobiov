@@ -4,7 +4,6 @@ import core.dao.UserDao;
 import core.lib.Inject;
 import core.lib.Service;
 import core.model.User;
-
 import java.util.List;
 
 @Service

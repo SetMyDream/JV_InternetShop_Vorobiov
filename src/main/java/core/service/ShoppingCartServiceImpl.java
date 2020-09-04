@@ -4,7 +4,6 @@ import core.dao.ShoppingCartDao;
 import core.lib.Inject;
 import core.lib.Service;
 import core.model.ShoppingCart;
-
 import java.util.List;
 
 @Service

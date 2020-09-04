@@ -5,7 +5,7 @@ import java.util.List;
 public class Order {
     private Long id;
     private Long userId;
-    List<Product> products;
+    private List<Product> products;
 
     public Order(List<Product> products) {
         this.products = products;
