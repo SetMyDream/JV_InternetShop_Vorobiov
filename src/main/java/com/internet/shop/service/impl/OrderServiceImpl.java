@@ -1,14 +1,12 @@
 package com.internet.shop.service.impl;
 
 import com.internet.shop.dao.OrderDao;
-import com.internet.shop.dao.ShoppingCartDao;
 import com.internet.shop.lib.Inject;
 import com.internet.shop.lib.Service;
 import com.internet.shop.model.Order;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.service.OrderService;
 import com.internet.shop.service.ShoppingCartService;
-
 import java.util.List;
 
 @Service
