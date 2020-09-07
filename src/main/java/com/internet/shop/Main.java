@@ -15,9 +15,6 @@ public class Main {
 
     public static void main(String[] args) {
         ProductService productService = (ProductService) injector.getInstance(ProductService.class);
-        UserService userService = (UserService) injector.getInstance(UserService.class);
-        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
-        ShoppingCartService shoppingCartService = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
         Product iphone = new Product("Iphone 11", 1200);
         Product iphoneX = new Product("Iphone X", 1000);
@@ -36,6 +33,7 @@ public class Main {
         productService.create(samsungX);
         productService.create(beetBite);
 
+        UserService userService = (UserService) injector.getInstance(UserService.class);
         User iphoneUser = new User("Serg","Serg","1111");
         userService.create(iphoneUser);
         User nokiaUser = new User("Gerg","Gerg","1112");
@@ -45,6 +43,8 @@ public class Main {
         User beetUser = new User("Scourge","Scource","1211");
         userService.create(beetUser);
 
+        ShoppingCartService shoppingCartService = (ShoppingCartService) injector
+                .getInstance(ShoppingCartService.class);
         ShoppingCart sergShoppingCart = new ShoppingCart(iphoneUser.getId());
         shoppingCartService.addProduct(sergShoppingCart,iphone);
         shoppingCartService.addProduct(sergShoppingCart,iphoneX);
@@ -75,6 +75,7 @@ public class Main {
         shoppingCartService.clear(georgShoppingCart);
         Storage.shoppingCarts.forEach(System.out::println);
 
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         System.out.println("complete order Serg");
         orderService.completeOrder(sergShoppingCart);
         Storage.orders.forEach(System.out::println);
