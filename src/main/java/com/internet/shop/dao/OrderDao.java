@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderDao {
-    public Order create(Order order);
+    Order create(Order order);
 
-    public Optional<Order> getById(Long orderId);
+    Optional<Order> getById(Long orderId);
 
-    public Order update(Order order);
+    Order update(Order order);
 
-    public boolean delete(Long orderId);
+    boolean delete(Long orderId);
 
-    public List<Order> getAllOrders();
+    List<Order> getAll();
 
     List<Order> getUserOrders(Long userId);
 }
