@@ -13,4 +13,14 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>All users</servlet-name>
+        <servlet-class>com.internet.shop.controllers.UserController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>All users</servlet-name>
+        <url-pattern>/users/all</url-pattern>
+    </servlet-mapping>
 </web-app>
