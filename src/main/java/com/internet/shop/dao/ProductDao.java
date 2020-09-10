@@ -1,6 +1,6 @@
 package com.internet.shop.dao;
 
-import com.internet.shop.model.ShoppingCart;
+import com.internet.shop.model.Product;
 
-public interface ShoppingCartDao extends GenericDao<ShoppingCart, Long> {
+public interface ProductDao extends GenericDao<Product, Long> {
 }
