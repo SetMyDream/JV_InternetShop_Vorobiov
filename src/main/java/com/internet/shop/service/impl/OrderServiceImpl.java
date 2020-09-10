@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUserOrders(Long userId) {
-        return orderDao.getAll();
+        return orderDao.getUserOrders(userId);
     }
 
     @Override
