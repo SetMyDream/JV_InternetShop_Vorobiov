@@ -9,19 +9,20 @@
 
 <table border=1>
     <tr>
-        <th>ID</th>
+        <th>Login</th>
         <th>Name</th>
+        <th>Delete</th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
             <td>
-                <c:out value="${user.id}"/>
+                <c:out value="${user.login}"/>
             </td>
             <td>
                 <c:out value="${user.name}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">X</a>
             </td>
         </tr>
     </c:forEach>
