@@ -12,15 +12,15 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Inject
-    OrderDao orderDao;
+    private OrderDao orderDao;
 
     @Inject
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public Order completeOrder(ShoppingCart shoppingCart) {
         Order order = orderDao.create(new Order(shoppingCart.getUserId()));
-        order.setProducts(java.util.List.copyOf(shoppingCart.getProducts()));
+        order.setProducts(List.copyOf(shoppingCart.getProducts()));
         shoppingCartService.clear(shoppingCart);
         return order;
     }
