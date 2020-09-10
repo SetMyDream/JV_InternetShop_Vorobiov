@@ -7,6 +7,8 @@ import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.service.ShoppingCartService;
 
+import java.util.List;
+
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Inject
@@ -43,8 +45,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public boolean delete(ShoppingCart shoppingCart) {
-        shoppingCartDao.getById(shoppingCart.getId());
+    public ShoppingCart get(Long id) {
+        return shoppingCartDao.getById(id).get();
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        shoppingCartDao.delete(id);
         return true;
+    }
+
+    @Override
+    public List<ShoppingCart> getAll() {
+        return shoppingCartDao.getAll();
     }
 }

@@ -3,7 +3,7 @@ package com.internet.shop.dao;
 import java.util.List;
 import java.util.Optional;
 
-public interface GeneralDao<T, K> {
+public interface GenericDao<T, K> {
     T create(T order);
 
     Optional<T> getById(K id);
