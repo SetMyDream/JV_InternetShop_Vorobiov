@@ -19,6 +19,13 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Optional<Order> getById(Long id) {
         return getAll().stream()
+                .filter(order -> order.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<Order> getByUserId(Long id) {
+        return getAll().stream()
                 .filter(order -> order.getUserId().equals(id))
                 .findFirst();
     }
