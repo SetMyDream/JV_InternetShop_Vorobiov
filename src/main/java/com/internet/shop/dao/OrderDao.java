@@ -4,4 +4,5 @@ import com.internet.shop.model.Order;
 import java.util.List;
 
 public interface OrderDao extends GeneralDao<Order, Long> {
+    List<Order> getUserOrders(Long userId);
 }
