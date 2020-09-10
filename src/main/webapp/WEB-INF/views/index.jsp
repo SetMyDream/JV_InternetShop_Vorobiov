@@ -5,5 +5,6 @@
 </head>
 <body>
 <h1>${message}${time}</h1>
+<a href="${pageContext.request.contextPath}/users/injectData">Go to injector</a>
 </body>
 </html>
