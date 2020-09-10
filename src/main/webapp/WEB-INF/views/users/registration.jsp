@@ -8,6 +8,7 @@
 <h4 style="color:red">${message}</h4>
 <form method="post" action="${pageContext.request.contextPath}/users/registration">
     <input placeholder="Username" type="text" name="username" value="${usernameStorage}"/> <br/>
+    <input placeholder="Login" type="text" name="login" value="${loginStorage}"/> <br/>
     <input placeholder="Create password" type="password" name="pass"/> <br/>
     <input placeholder="Repeat password" type="password" name="pass-repeat"/> <br/>
     <button type="submit">Register</button>

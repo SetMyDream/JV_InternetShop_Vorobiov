@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>All users</servlet-name>
-        <servlet-class>com.internet.shop.controllers.UserController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.users.UserController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>registration</servlet-name>
-        <servlet-class>com.internet.shop.controllers.RegistrationController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.users.RegistrationController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -41,16 +41,56 @@
 
     <servlet-mapping>
         <servlet-name>injectData</servlet-name>
-        <url-pattern>/users/injectData</url-pattern>
+        <url-pattern>/injectData</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>deleteUser</servlet-name>
-        <servlet-class>com.internet.shop.controllers.DeleteUsersController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.users.DeleteUsersController</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>deleteUser</servlet-name>
         <url-pattern>/users/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addProduct</servlet-name>
+        <servlet-class>com.internet.shop.controllers.products.AddProductController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>addProduct</servlet-name>
+        <url-pattern>/products/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>allProducts</servlet-name>
+        <servlet-class>com.internet.shop.controllers.products.GetAllProductsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>allProducts</servlet-name>
+        <url-pattern>/products/all</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addProductToCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.shopcarts.AddProductToCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>addProductToCart</servlet-name>
+        <url-pattern>/shoppingCarts/products/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>showCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.shopcarts.ShopCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>showCart</servlet-name>
+        <url-pattern>/shoppingCarts/products</url-pattern>
     </servlet-mapping>
 </web-app>
