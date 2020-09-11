@@ -19,8 +19,8 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         LocalTime localTime = LocalTime.now();
         LocalDate localDate = LocalDate.now();
-        ZonedDateTime zonedDateTime = ZonedDateTime.of
-                (localDate, localTime, ZoneId.of("Europe/Helsinki"));
+        ZonedDateTime zonedDateTime = ZonedDateTime
+                .of(localDate, localTime, ZoneId.of("Europe/Helsinki"));
         String time = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)
                         .format(zonedDateTime);
         req.setAttribute("time", time);
