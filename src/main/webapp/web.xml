@@ -86,7 +86,7 @@
 
     <servlet>
         <servlet-name>showCart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.shopcarts.ShopCartController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.shopcarts.GetShopCartProductsController</servlet-class>
     </servlet>
 
     <servlet-mapping>
