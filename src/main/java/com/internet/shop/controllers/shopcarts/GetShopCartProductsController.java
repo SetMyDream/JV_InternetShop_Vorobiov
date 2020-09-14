@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShopCartController extends HttpServlet {
+public class GetShopCartProductsController extends HttpServlet {
     private static final Long USER_ID = 1L;
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private ShoppingCartService shoppingCartService =
+    private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Product> allProducts = shoppingCartService.getByUserId(USER_ID).getProducts();
-        req.setAttribute("products", allProducts);
-        req.getRequestDispatcher("/WEB-INF/views/shopping-carts/products.jsp").forward(req, resp);
+        List<Product> userProducts = shoppingCartService.getByUserId(USER_ID).getProducts();
+        req.setAttribute("products", userProducts);
+        req.getRequestDispatcher("/WEB-INF/views/shoppingCarts/products.jsp").forward(req, resp);
     }
 }
