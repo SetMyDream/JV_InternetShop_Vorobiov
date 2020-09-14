@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 public class ShowUserOrdersController extends HttpServlet {
     private static final Long USER_ID = 1L;
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final OrderService orderService =
+    private OrderService orderService =
             (OrderService) injector.getInstance(OrderService.class);
-    private final UserService userService =
+    private UserService userService =
             (UserService) injector.getInstance(UserService.class);
 
     @Override

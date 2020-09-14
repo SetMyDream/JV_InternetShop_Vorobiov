@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/orders/details")
 public class OrderDetailController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final OrderService orderService =
+    private OrderService orderService =
             (OrderService) injector.getInstance(OrderService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        System.out.println(orderService.getUserOrders(1L));
         Long orderId = Long.valueOf(req.getParameter("id"));
         List<Product> products = orderService.get(orderId).getProducts();
         req.setAttribute("order", orderId);

@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final UserService userService =
+    private UserService userService =
             (UserService) injector.getInstance(UserService.class);
-    private final ShoppingCartService shoppingCartService =
+    private ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override
@@ -36,7 +36,7 @@ public class RegistrationController extends HttpServlet {
             req.setAttribute("message", "Your passwords are mismatch!");
             req.setAttribute("usernameStorage", name);
             req.setAttribute("loginStorage", login);
-            req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
         }
     }
 

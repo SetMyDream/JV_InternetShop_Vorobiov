@@ -23,13 +23,13 @@
                 <c:out value="${product.price}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/shoppingCarts/products/add?id=${product.id}">Buy</a>
+                <a href="${pageContext.request.contextPath}/shopping-carts/products/add?id=${product.id}">Buy</a>
             </td>
         </tr>
     </c:forEach>
 </table>
 <br/>
-<a href="${pageContext.request.contextPath}/shoppingCarts/products">View your cart</a>
+<a href="${pageContext.request.contextPath}/shopping-carts/products">View your cart</a>
 <br/>
 <br/>
 <a href="${pageContext.request.contextPath}/orders/admin">View all orders as Admin</a>

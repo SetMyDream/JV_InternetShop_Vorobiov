@@ -51,7 +51,7 @@
 
     <servlet-mapping>
         <servlet-name>removeProdFromShopcart</servlet-name>
-        <url-pattern>/shoppingCarts/products/remove</url-pattern>
+        <url-pattern>/shopping-carts/products/remove</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -81,7 +81,7 @@
 
     <servlet-mapping>
         <servlet-name>addProductToCart</servlet-name>
-        <url-pattern>/shoppingCarts/products/add</url-pattern>
+        <url-pattern>/shopping-carts/products/add</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -91,6 +91,6 @@
 
     <servlet-mapping>
         <servlet-name>showCart</servlet-name>
-        <url-pattern>/shoppingCarts/products</url-pattern>
+        <url-pattern>/shopping-carts/products</url-pattern>
     </servlet-mapping>
 </web-app>

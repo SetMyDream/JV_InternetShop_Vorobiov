@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AddProductController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final ProductService productService =
+    private ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
 
     @Override

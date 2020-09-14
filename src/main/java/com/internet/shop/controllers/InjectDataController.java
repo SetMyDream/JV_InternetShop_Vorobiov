@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/inject")
 public class InjectDataController extends HttpServlet {
-    private static final Injector injector = Injector.getInstance("com.internet.shop");
+    private static Injector injector = Injector.getInstance("com.internet.shop");
     private ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
     private UserService userService =
