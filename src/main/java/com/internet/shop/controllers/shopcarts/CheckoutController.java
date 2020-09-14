@@ -22,7 +22,7 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        orderService.create(orderService.completeOrder(shoppingCartService.get(USER_ID)));
+        orderService.completeOrder(shoppingCartService.get(USER_ID));
         resp.sendRedirect(req.getContextPath() + "/orders/user");
     }
 }
