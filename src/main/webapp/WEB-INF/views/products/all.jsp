@@ -32,13 +32,7 @@
 <a href="${pageContext.request.contextPath}/shopping-carts/products">View your cart</a>
 <br/>
 <br/>
-<a href="${pageContext.request.contextPath}/orders/admin">View all orders as Admin</a>
-<br/>
-<br/>
-<a href="${pageContext.request.contextPath}/products/admin">View all products as Admin</a>
-<br/>
-<br/>
-<a href="${pageContext.request.contextPath}/">Back to the main page</a>
+<a href="${pageContext.request.contextPath}/index">Back to the main page</a>
 </br>
 </body>
 </html>

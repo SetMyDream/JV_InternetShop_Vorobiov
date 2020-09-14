@@ -37,6 +37,6 @@
 <a href="${pageContext.request.contextPath}/products/all">Add more products</a>
 <br/>
 <br/>
-<a href="${pageContext.request.contextPath}/">Back to the main page</a>
+<a href="${pageContext.request.contextPath}/index">Back to the main page</a>
 </body>
 </html>

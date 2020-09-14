@@ -34,6 +34,6 @@
 <a href="${pageContext.request.contextPath}/users/registration">Register new user</a>
 </br>
 </br>
-<a href="${pageContext.request.contextPath}/">Back to the main page</a>
+<a href="${pageContext.request.contextPath}/index">Back to the main page</a>
 </body>
 </html>

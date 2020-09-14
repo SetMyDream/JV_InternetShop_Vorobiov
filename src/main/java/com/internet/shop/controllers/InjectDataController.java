@@ -48,6 +48,6 @@ public class InjectDataController extends HttpServlet {
         ShoppingCart todShoppingCart = new ShoppingCart(tod.getId());
         shoppingCartService.create(todShoppingCart);
 
-        req.getRequestDispatcher("/WEB-INF/views/injectData.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/inject.jsp").forward(req, resp);
     }
 }

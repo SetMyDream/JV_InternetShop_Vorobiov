@@ -5,14 +5,14 @@
     <title>Order</title>
 </head>
 <body>
-<h1>Order ${order}</h1>
+<h1>Order ${order.id}</h1>
 <table border="1">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Price</th>
     </tr>
-    <c:forEach var="product" items="${products}">
+    <c:forEach var="product" items="${order.products}">
         <tr>
             <td>
                 <c:out value="${product.id}"/>
@@ -27,7 +27,7 @@
     </c:forEach>
 </table>
 <br/>
-<a href="${pageContext.request.contextPath}/">Back to the main page</a>
+<a href="${pageContext.request.contextPath}/index">Back to the main page</a>
 <br/>
 </body>
 </html>
