@@ -21,6 +21,6 @@ public class GetShopCartProductsController extends HttpServlet {
             throws ServletException, IOException {
         List<Product> userProducts = shoppingCartService.getByUserId(USER_ID).getProducts();
         req.setAttribute("products", userProducts);
-        req.getRequestDispatcher("/WEB-INF/views/shoppingCarts/products.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/shopping-carts/products.jsp").forward(req, resp);
     }
 }

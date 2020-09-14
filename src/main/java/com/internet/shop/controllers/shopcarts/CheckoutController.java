@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 public class CheckoutController extends HttpServlet {
     private static final Long USER_ID = 1L;
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final OrderService orderService =
-            (OrderService) injector.getInstance(OrderService.class);
     private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+    private final OrderService orderService =
+            (OrderService) injector.getInstance(OrderService.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         orderService.create(orderService.completeOrder(shoppingCartService.get(USER_ID)));
-        orderService.getUserOrders(USER_ID);
         resp.sendRedirect(req.getContextPath() + "/orders");
     }
+
 }

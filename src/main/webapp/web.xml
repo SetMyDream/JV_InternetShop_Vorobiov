@@ -11,7 +11,7 @@
 
     <servlet-mapping>
         <servlet-name>index</servlet-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -42,16 +42,6 @@
     <servlet-mapping>
         <servlet-name>deleteUser</servlet-name>
         <url-pattern>/users/delete</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>removeProdFromShopcart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.shopcarts.RemoveProductFromShoppingCartController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>removeProdFromShopcart</servlet-name>
-        <url-pattern>/shopping-carts/products/remove</url-pattern>
     </servlet-mapping>
 
     <servlet>
