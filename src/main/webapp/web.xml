@@ -55,6 +55,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>removeProdFromShopcart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.shopcarts.RemoveProductFromShoppingCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>removeProdFromShopcart</servlet-name>
+        <url-pattern>/shoppingCarts/products/remove</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>addProduct</servlet-name>
         <servlet-class>com.internet.shop.controllers.products.AddProductController</servlet-class>
     </servlet>

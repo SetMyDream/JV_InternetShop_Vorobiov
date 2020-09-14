@@ -10,6 +10,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Price</th>
+        <th>Remove</th>
     </tr>
     <c:forEach var="product" items="${products}">
         <tr>
@@ -22,13 +23,18 @@
             <td>
                 <c:out value="${product.price}"/>
             </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/shoppingCarts/products/remove?id=${product.id}">X</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
 <br/>
+<form method="post" action="${pageContext.request.contextPath}/shoppingCarts/products/checkout">
+    <button type="submit">Checkout</button>
+</form>
 <br/>
 <a href="${pageContext.request.contextPath}/products/all">Add more products</a>
-</br>
 </br>
 <a href="${pageContext.request.contextPath}/">Back to the main page</a>
 </body>
