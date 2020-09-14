@@ -22,6 +22,6 @@ public class RemoveProductFromShoppingCartController extends HttpServlet {
             throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
         shoppingCartService.deleteProduct(shoppingCartService.get(USER_ID), productService.get(id));
-        resp.sendRedirect(req.getContextPath() + "/shoppingCarts/products");
+        resp.sendRedirect(req.getContextPath() + "/shopping-carts/products");
     }
 }

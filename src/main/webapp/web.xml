@@ -35,16 +35,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>injectData</servlet-name>
-        <servlet-class>com.internet.shop.controllers.InjectDataController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>injectData</servlet-name>
-        <url-pattern>/injectData</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>deleteUser</servlet-name>
         <servlet-class>com.internet.shop.controllers.users.DeleteUsersController</servlet-class>
     </servlet>

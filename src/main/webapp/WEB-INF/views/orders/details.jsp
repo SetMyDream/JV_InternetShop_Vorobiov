@@ -5,7 +5,7 @@
     <title>Order</title>
 </head>
 <body>
-<h1>Order ${orderId}</h1>
+<h1>Order ${order}</h1>
 <table border="1">
     <tr>
         <th>ID</th>

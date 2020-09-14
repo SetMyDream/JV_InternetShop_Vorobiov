@@ -22,7 +22,7 @@ public class OrderDetailController extends HttpServlet {
             throws ServletException, IOException {
         Long orderId = Long.valueOf(req.getParameter("id"));
         List<Product> products = orderService.get(orderId).getProducts();
-        req.setAttribute("orderId", orderId);
+        req.setAttribute("order", orderId);
         req.setAttribute("products", products);
         req.getRequestDispatcher("/WEB-INF/views/orders/details.jsp").forward(req, resp);
     }

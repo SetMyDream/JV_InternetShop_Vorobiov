@@ -9,28 +9,30 @@ import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet("/inject")
 public class InjectDataController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final ProductService productService =
+    private ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
-    private final UserService userService =
+    private UserService userService =
             (UserService) injector.getInstance(UserService.class);
-    private final ShoppingCartService shoppingCartService =
+    private ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User alice = new User("Alice", "Madness", "returns");
-        userService.create(alice);
-        User john = new User("John", "Dou", "index");
-        userService.create(john);
         User tod = new User("Tod", "Howard", "it`s just works");
+        User alice = new User("Alice", "Madness", "returns");
+        User john = new User("John", "Dou", "index");
         userService.create(tod);
+        userService.create(alice);
+        userService.create(john);
 
         Product iphoneX = new Product("Iphone X", 1000);
         productService.create(iphoneX);
