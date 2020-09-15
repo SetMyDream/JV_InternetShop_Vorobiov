@@ -9,12 +9,16 @@
 
 <table border=1>
     <tr>
+        <th>ID</th>
         <th>Login</th>
         <th>Name</th>
         <th>Delete</th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
+            <td>
+                <c:out value="${user.id}"/>
+            </td>
             <td>
                 <c:out value="${user.login}"/>
             </td>
@@ -30,6 +34,6 @@
 <a href="${pageContext.request.contextPath}/users/registration">Register new user</a>
 </br>
 </br>
-<a href="${pageContext.request.contextPath}/">Back to the main page</a>
+<a href="${pageContext.request.contextPath}/index">Back to the main page</a>
 </body>
 </html>

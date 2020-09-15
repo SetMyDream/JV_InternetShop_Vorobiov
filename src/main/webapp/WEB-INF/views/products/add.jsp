@@ -12,6 +12,6 @@
 <br><a href="${pageContext.request.contextPath}/products/all">To all products</a>
 <br />
 <br />
-<a href="${pageContext.request.contextPath}/">Return to the main page</a>
+<a href="${pageContext.request.contextPath}/index">Return to the main page</a>
 </body>
 </html>
