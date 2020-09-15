@@ -26,10 +26,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User update(User user) {
         IntStream.range(0, Storage.users.size())
-                .filter(i -> Storage.users
-                        .get(i)
-                        .getId()
-                        .equals(user.getId()))
+                .filter(i -> Storage.users.get(i).getId().equals(user.getId()))
                 .forEach(i -> Storage.users.set(i, user));
         return user;
     }
@@ -46,6 +43,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByLogin(String login) {
-        return Storage.users.stream().filter(s -> s.getLogin().equals(login)).findFirst();
+        return Storage.users.stream()
+                .filter(s -> s.getLogin().equals(login))
+                .findFirst();
     }
 }

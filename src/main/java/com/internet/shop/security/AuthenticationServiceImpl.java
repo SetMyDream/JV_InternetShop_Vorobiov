@@ -7,19 +7,18 @@ import com.internet.shop.model.User;
 import com.internet.shop.service.UserService;
 
 @Service
-public class AuthenticationExceptionImpl implements AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
+    private static final String EXCEPTION_MESSAGE = "Wrong login or password";
     @Inject
     private UserService userService;
 
     @Override
     public User login(String login, String password) throws AuthenticationException {
-        final String exceptionMessage = "Wrong login or password";
-
         User user = userService.findByLogin(login).orElseThrow(() ->
-                new AuthenticationException(exceptionMessage));
+                new AuthenticationException(EXCEPTION_MESSAGE));
         if (user.getPassword().equals(password)) {
             return user;
         }
-        throw new AuthenticationException(exceptionMessage);
+        throw new AuthenticationException(EXCEPTION_MESSAGE);
     }
 }
