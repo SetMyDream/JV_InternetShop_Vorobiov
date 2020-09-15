@@ -36,7 +36,7 @@ public class AuthenticationFilter implements Filter {
         }
         Long userId = (Long) req.getSession().getAttribute(USER_ID);
         if (userId == null) {
-            resp.sendRedirect("/login");
+            resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
         filterChain.doFilter(req, resp);
