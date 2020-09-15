@@ -10,6 +10,10 @@
 
     <filter-mapping>
         <filter-name>authenticationFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/users/all</url-pattern>
+        <url-pattern>/orders/*</url-pattern>
+        <url-pattern>/shopping-carts/*</url-pattern>
+        <url-pattern>/products/manage*</url-pattern>
+        <url-pattern>/products/add*</url-pattern>
     </filter-mapping>
 </web-app>
