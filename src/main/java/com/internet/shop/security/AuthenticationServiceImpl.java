@@ -7,7 +7,7 @@ import com.internet.shop.model.User;
 import com.internet.shop.service.UserService;
 
 @Service
-public class AuthenticationExceptionImpl implements AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
 
