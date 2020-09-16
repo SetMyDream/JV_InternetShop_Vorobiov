@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/shopping-carts/products")
 public class GetShopCartProductsController extends HttpServlet {
@@ -22,8 +21,7 @@ public class GetShopCartProductsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        Long userId = (Long) session.getAttribute(USER_ID);
+        Long userId = (Long) req.getSession().getAttribute(USER_ID);
         List<Product> userProducts = shoppingCartService.getByUserId(userId).getProducts();
         req.setAttribute("products", userProducts);
         req.getRequestDispatcher("/WEB-INF/views/shopping-carts/products.jsp").forward(req, resp);
