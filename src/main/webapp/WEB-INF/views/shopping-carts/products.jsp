@@ -5,6 +5,7 @@
     <title>Products in cart</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"></jsp:include>
 <table border="1">
     <tr>
         <th>ID</th>
@@ -37,6 +38,6 @@
 <a href="${pageContext.request.contextPath}/products/all">Add more products</a>
 <br/>
 <br/>
-<a href="${pageContext.request.contextPath}/index">Back to the main page</a>
+<a href="${pageContext.request.contextPath}/">Back to the main page</a>
 </body>
 </html>

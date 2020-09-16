@@ -4,6 +4,8 @@
 <head>
     <title>Your Order</title>
 </head>
+<body>
+<jsp:include page="/header.jsp"></jsp:include>
 <br>
 <h2>User ${username}, here list of your order</h2>
 <c:forEach var="order" items="${orders}">

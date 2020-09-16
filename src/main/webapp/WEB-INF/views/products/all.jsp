@@ -5,6 +5,7 @@
     <title>All products</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"></jsp:include>
 <table border="1">
     <tr>
         <th>ID</th>
