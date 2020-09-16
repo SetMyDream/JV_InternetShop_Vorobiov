@@ -4,6 +4,7 @@
     <title>Login</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"></jsp:include>
 <form name="loginForm" method="post" action="${pageContext.request.contextPath}/login">
     Login: <input type="text" name="login"/> <br/>
     Password: <input type="password" name="password"/> <br/>

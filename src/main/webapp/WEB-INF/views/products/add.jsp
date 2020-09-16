@@ -3,6 +3,7 @@
 <head>
     <title>Add Product to the store</title>
 </head>
+<jsp:include page="/header.jsp"></jsp:include>
 <br>
 <form method="post" action="${pageContext.request.contextPath}/products/add">
     Product name: <input type="text" required="required" name="name">

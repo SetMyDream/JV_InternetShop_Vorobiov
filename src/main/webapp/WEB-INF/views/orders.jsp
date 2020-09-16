@@ -5,6 +5,7 @@
     <title>Orders</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"></jsp:include>
 <h1>All orders (Admin)</h1>
 <table border="1">
     <tr>

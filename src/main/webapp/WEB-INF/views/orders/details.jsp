@@ -5,6 +5,7 @@
     <title>Order</title>
 </head>
 <body>
+<jsp:include page="/header.jsp"></jsp:include>
 <h1>Order ${order.id}</h1>
 <table border="1">
     <tr>
