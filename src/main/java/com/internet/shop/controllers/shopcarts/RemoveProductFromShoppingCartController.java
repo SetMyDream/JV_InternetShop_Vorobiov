@@ -9,10 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/shopping-carts/products/remove")
 public class RemoveProductFromShoppingCartController extends HttpServlet {
-    private static final Long USER_ID = 1L;
+    private static final String USER_ID = "user_id";
     private static Injector injector = Injector.getInstance("com.internet.shop");
     private ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
@@ -22,8 +23,10 @@ public class RemoveProductFromShoppingCartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Long userId = (Long) session.getAttribute(USER_ID);
         Long productId = Long.valueOf(req.getParameter("id"));
-        shoppingCartService.deleteProduct(shoppingCartService.getByUserId(USER_ID),
+        shoppingCartService.deleteProduct(shoppingCartService.getByUserId(userId),
                 productService.get(productId));
         resp.sendRedirect(req.getContextPath() + "/shopping-carts/products");
     }

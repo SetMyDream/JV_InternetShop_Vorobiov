@@ -8,10 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/shopping-carts/products/checkout")
 public class CheckoutController extends HttpServlet {
-    private static final Long USER_ID = 1L;
+    private static final String USER_ID = "user_id";
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
@@ -21,7 +22,9 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        orderService.completeOrder(shoppingCartService.getByUserId(USER_ID));
+        HttpSession session = req.getSession();
+        Long userId = (Long) session.getAttribute(USER_ID);
+        orderService.completeOrder(shoppingCartService.getByUserId(userId));
         resp.sendRedirect(req.getContextPath() + "/users/orders");
     }
 }

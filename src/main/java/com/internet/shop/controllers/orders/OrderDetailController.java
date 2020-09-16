@@ -19,7 +19,6 @@ public class OrderDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        System.out.println(orderService.getUserOrders(1L));
         Long orderId = Long.valueOf(req.getParameter("id"));
         Order order = orderService.get(orderId);
         req.setAttribute("order", order);
