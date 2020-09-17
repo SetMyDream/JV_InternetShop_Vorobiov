@@ -30,13 +30,13 @@ public class InjectDataController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         User tod = new User("Tod", "Howard", "it`s just works");
-        User alice = new User("Alice", "Madness", "returns");
         User john = new User("John", "Dou", "index");
-        User admin = new User("admin", "admin", "admin");
-        admin.setRoles(Set.of(Role.of("ADMIN")));
+        User alice = new User("Alice", "Madness", "returns");
         userService.create(tod);
         userService.create(alice);
         userService.create(john);
+        User admin = new User("admin", "admin", "admin");
+        admin.setRoles(Set.of(Role.of("ADMIN")));
         userService.create(admin);
 
         Product iphoneX = new Product("Iphone X", 1000);
