@@ -18,6 +18,7 @@ public class AuthenticationFilter implements Filter {
     private final UserService userService =
             (UserService) injector.getInstance(UserService.class);
 
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -35,7 +36,7 @@ public class AuthenticationFilter implements Filter {
             return;
         }
         Long userId = (Long) req.getSession().getAttribute(USER_ID);
-        if (userId == null) {
+        if (userId == null || userService.get(userId) == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }

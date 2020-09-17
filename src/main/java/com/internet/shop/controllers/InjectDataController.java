@@ -2,12 +2,14 @@ package com.internet.shop.controllers;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
+import com.internet.shop.model.Role;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
 import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import java.io.IOException;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,9 +32,12 @@ public class InjectDataController extends HttpServlet {
         User tod = new User("Tod", "Howard", "it`s just works");
         User alice = new User("Alice", "Madness", "returns");
         User john = new User("John", "Dou", "index");
+        User admin = new User("admin", "admin", "admin");
+        admin.setRoles(Set.of(Role.of("ADMIN")));
         userService.create(tod);
         userService.create(alice);
         userService.create(john);
+        userService.create(admin);
 
         Product iphoneX = new Product("Iphone X", 1000);
         productService.create(iphoneX);
