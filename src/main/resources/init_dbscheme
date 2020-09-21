@@ -1,25 +1,6 @@
 CREATE DATABASE `internet_shop`
 /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-CREATE TABLE `internet_shop`.`users`
-(
-    `user_id`  bigint       NOT NULL,
-    `username` varchar(225) NOT NULL DEFAULT 'No_name',
-    `login`    varchar(225) NOT NULL,
-    `password` varchar(225) NOT NULL,
-    PRIMARY KEY (`user_id`),
-    UNIQUE KEY `login_UNIQUE` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `internet_shop`.`users` (`user_id`, `username`, `login`, `password`)
-VALUES (1, 'Tod', 'Howard', 'it`s just works');
-INSERT INTO `internet_shop`.`users` (`user_id`, `username`, `login`, `password`)
-VALUES (2, 'John', 'Dou', 'index');
-INSERT INTO `internet_shop`.`users` (`user_id`, `username`, `login`, `password`)
-VALUES (3, 'Alice', 'Madness', 'returns');
-INSERT INTO `internet_shop`.`users` (`user_id`, `username`, `login`, `password`)
-VALUES (4, 'admin', 'admin', 'admin');
-
 CREATE TABLE `internet_shop`.`products`
 (
     `product_id`   BIGINT(11)   NOT NULL AUTO_INCREMENT,

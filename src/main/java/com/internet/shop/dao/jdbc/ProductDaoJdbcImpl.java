@@ -1,6 +1,7 @@
 package com.internet.shop.dao.jdbc;
 
 import com.internet.shop.dao.ProductDao;
+import com.internet.shop.exceptions.DataProcessingException;
 import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Product;
 import com.internet.shop.util.ConnectionUtil;
@@ -18,7 +19,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public Product create(Product product) {
-        String query = "INSERT INTO products ( product_name, price) VALUES (?,?)";
+        String query = "INSERT INTO products (product_name, price) VALUES (?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
@@ -30,7 +31,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 product.setId(resultSet.getLong(1));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("We can`t add product with id = " + product.getId(), e);
+            throw new DataProcessingException("We can`t add product with id = "
+                    + product.getId(), e);
         }
         return product;
     }
@@ -47,7 +49,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 return Optional.ofNullable(getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't read result of statement", e);
+            throw new DataProcessingException("Unable to get product with ID " + id, e);
         }
         return Optional.empty();
     }
@@ -64,7 +66,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 products.add(product);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't get product all products", e);
+            throw new DataProcessingException("Can't get all products", e);
         }
         return products;
     }
@@ -81,7 +83,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.executeUpdate();
             return product;
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to update product with ID "
+            throw new DataProcessingException("Failed to update product with ID "
                     + product.getId(), e);
         }
     }
@@ -94,7 +96,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.setLong(1, id);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to delete product from ID " + id, e);
+            throw new DataProcessingException("Failed to delete product with ID " + id, e);
         }
     }
 
