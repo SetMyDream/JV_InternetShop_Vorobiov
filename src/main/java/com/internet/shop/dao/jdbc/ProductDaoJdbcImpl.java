@@ -23,7 +23,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
-            (statement).setString(1, product.getName());
+            statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -31,7 +31,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 product.setId(resultSet.getLong(1));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("We can`t add product with id = "
+            throw new DataProcessingException("Can`t add product with id = "
                     + product.getId(), e);
         }
         return product;
