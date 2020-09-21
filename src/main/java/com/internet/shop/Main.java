@@ -1,11 +1,13 @@
 package com.internet.shop;
 
 import com.internet.shop.dao.ProductDao;
-import com.internet.shop.dao.jdbc.ProductDaoJdbcImpl;
+import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
 import java.util.List;
 
 public class Main {
+    private static Injector injector = Injector.getInstance("com.internet.shop");
+
     private static void readAll(ProductDao productDao) {
         List<Product> all = productDao.getAll();
         for (Product product : all) {
@@ -14,7 +16,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        ProductDao productDao = new ProductDaoJdbcImpl();
+        ProductDao productDao =
+                (ProductDao) injector.getInstance(ProductDao.class);
 
         System.out.println("Сreate");
         Product iphone = new Product("Iphone 11", 1200);
