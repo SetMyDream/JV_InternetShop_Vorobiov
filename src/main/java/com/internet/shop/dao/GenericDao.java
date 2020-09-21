@@ -8,7 +8,7 @@ public interface GenericDao<T, K> {
 
     Optional<T> getById(K id);
 
-    T update(T order);
+    T update(T t);
 
     boolean delete(K id);
 
