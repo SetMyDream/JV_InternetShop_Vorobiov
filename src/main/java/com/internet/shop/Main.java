@@ -39,6 +39,8 @@ public class Main {
 
         System.out.println("Delete");
         productDao.delete(iphone.getId());
+        productDao.delete(iphoneX.getId());
+        productDao.delete(nokia5130.getId());
         readAll(productDao);
     }
 }
