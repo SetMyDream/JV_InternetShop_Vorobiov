@@ -1,0 +1,13 @@
+CREATE DATABASE `internet_shop`
+/*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+CREATE TABLE `internet_shop`.`products`
+(
+    `product_id`   BIGINT(11)   NOT NULL AUTO_INCREMENT,
+    `product_name` VARCHAR(225) NOT NULL DEFAULT 'product',
+    `price`        DOUBLE       NOT NULL DEFAULT 0.00,
+    `deleted`      TINYINT      NOT NULL DEFAULT 0,
+    PRIMARY KEY (`product_id`)
+) ENGINE = InnoDB
+DEFAULT CHARACTER
+SET = utf8;

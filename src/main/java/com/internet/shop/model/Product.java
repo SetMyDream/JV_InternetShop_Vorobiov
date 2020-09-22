@@ -4,10 +4,26 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
+    private boolean deleted;
+
+    public Product(String name, double price, Long productId, boolean deleted) {
+        this.name = name;
+        this.price = price;
+        this.id = productId;
+        this.deleted = deleted;
+    }
 
     public Product(String name, double price) {
         this.name = name;
         this.price = price;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Long getId() {
