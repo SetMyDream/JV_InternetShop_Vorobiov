@@ -30,7 +30,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 order.setOrderId(generatedKeys.getLong(1));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't create Order with id: " + order.getOrderId(), e);
+            throw new DataProcessingException("Can't create Order with id: "
+                    + order.getOrderId(), e);
         }
         for (Product product : order.getProducts()) {
             addDataToOrdersProductTable(order.getOrderId(), product.getProductId());
@@ -106,7 +107,24 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public List<Order> getUserOrders(Long userId) {
-        return null;
+        String query = "SELECT * FROM orders WHERE user_id = ? AND deleted = false;";
+        List<Order> orderList = new ArrayList<>();
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Long orderId = resultSet.getLong("order_id");
+                orderList.add(new Order(orderId, userId));
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Failed to get orders of user with id" + userId, e);
+        }
+        for (Order order : orderList) {
+            List<Product> productList = getOrdersProducts(order.getOrderId());
+            order.setProducts(productList);
+        }
+        return orderList;
     }
 
     @Override

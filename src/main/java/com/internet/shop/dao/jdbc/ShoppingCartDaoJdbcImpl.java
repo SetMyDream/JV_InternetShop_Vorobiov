@@ -56,7 +56,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                     + shoppingCart.getShoppingCartId(), e);
         }
         for (Product product : shoppingCart.getProducts()) {
-            addDataToShoppingCartProductsTable(shoppingCart.getShoppingCartId(), product.getProductId());
+            addDataToShoppingCartProductsTable(shoppingCart.getShoppingCartId(),
+                    product.getProductId());
         }
         return shoppingCart;
     }
