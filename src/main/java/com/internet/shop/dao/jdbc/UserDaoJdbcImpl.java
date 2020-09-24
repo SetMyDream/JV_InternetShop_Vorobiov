@@ -35,7 +35,7 @@ public class UserDaoJdbcImpl implements UserDao {
             throw new DataProcessingException("Can't find User with login: " + login, e);
         }
         if (user != null) {
-            user.setRoles(getUserRoles(user.getId()));
+            user.setRoles(getUserRoles(user.getUserId()));
         }
         return Optional.ofNullable(user);
     }
@@ -49,14 +49,14 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                user.setId(generatedKeys.getLong(1));
+                user.setUserId(generatedKeys.getLong(1));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't create User with id: " + user.getId(), e);
+            throw new DataProcessingException("Can't create User with id: " + user.getUserId(), e);
         }
         for (Role role : user.getRoles()) {
             Long roleId = getRoleByRoleName(role.getRoleName().toString());
-            addUserRoles(user.getId(), roleId);
+            addUserRoles(user.getUserId(), roleId);
         }
         return user;
     }
@@ -70,11 +70,11 @@ public class UserDaoJdbcImpl implements UserDao {
             setValues(statement, user);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't create User with id: " + user.getId(), e);
+            throw new DataProcessingException("Can't create User with id: " + user.getUserId(), e);
         }
-        deleteUserRole(user.getId());
+        deleteUserRole(user.getUserId());
         for (Role role : user.getRoles()) {
-            addUserRoles(user.getId(), role.getId());
+            addUserRoles(user.getUserId(), role.getRoleId());
         }
         return user;
     }
@@ -94,7 +94,7 @@ public class UserDaoJdbcImpl implements UserDao {
             throw new DataProcessingException("Can't find User with id: " + id, e);
         }
         if (user != null) {
-            user.setRoles(getUserRoles(user.getId()));
+            user.setRoles(getUserRoles(user.getUserId()));
         }
         return Optional.ofNullable(user);
     }
@@ -126,7 +126,7 @@ public class UserDaoJdbcImpl implements UserDao {
             throw new DataProcessingException("Can't get Users from DB", e);
         }
         for (User user : users) {
-            user.setRoles(getUserRoles(user.getId()));
+            user.setRoles(getUserRoles(user.getUserId()));
         }
         return users;
     }
@@ -167,7 +167,7 @@ public class UserDaoJdbcImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Role role = Role.of(resultSet.getString("role_name"));
-                role.setId(resultSet.getLong("role_id"));
+                role.setRoleId(resultSet.getLong("role_id"));
                 roles.add(role);
             }
         } catch (SQLException e) {

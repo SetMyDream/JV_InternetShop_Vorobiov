@@ -1,7 +1,7 @@
 package com.internet.shop.model;
 
 public class Role {
-    private Long id;
+    private Long roleId;
     private RoleName roleName;
 
     private Role(RoleName roleName) {
@@ -12,12 +12,12 @@ public class Role {
         return new Role(RoleName.valueOf(roleName));
     }
 
-    public Long getId() {
-        return id;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public RoleName getRoleName() {

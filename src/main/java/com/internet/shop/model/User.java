@@ -3,7 +3,7 @@ package com.internet.shop.model;
 import java.util.Set;
 
 public class User {
-    private Long id;
+    private Long userId;
     private String name;
     private String login;
     private String password;
@@ -16,18 +16,18 @@ public class User {
     }
 
     public User(Long id, String name, String login, String password) {
-        this.id = id;
+        this.userId = id;
         this.name = name;
         this.login = login;
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -64,7 +64,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id
+        return "User{" + "id=" + userId
                 + ", name='" + name + '\'' + ", login='" + login + '\''
                 + ", password='" + password + '\'' + '}';
     }

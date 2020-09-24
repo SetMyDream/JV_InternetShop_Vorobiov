@@ -27,13 +27,13 @@ public class OrderDaoJdbcImpl implements OrderDao {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                order.setId(generatedKeys.getLong(1));
+                order.setOrderId(generatedKeys.getLong(1));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't create Order with id: " + order.getId(), e);
+            throw new DataProcessingException("Can't create Order with id: " + order.getOrderId(), e);
         }
         for (Product product : order.getProducts()) {
-            addDataToOrdersProductTable(order.getId(), product.getId());
+            addDataToOrdersProductTable(order.getOrderId(), product.getProductId());
         }
         return order;
     }
@@ -53,13 +53,15 @@ public class OrderDaoJdbcImpl implements OrderDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Can't get Order with id: " + id, e);
         }
-        order.setProducts(getOrdersProducts(order.getId()));
+        order.setProducts(getOrdersProducts(order.getOrderId()));
         return Optional.of(order);
     }
 
     @Override
     public Order update(Order order) {
-        return null;
+        delete(order.getOrderId());
+        create(order);
+        return order;
     }
 
     @Override
@@ -149,7 +151,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     private void setProductsToOrders(List<Order> orders) {
         for (Order order : orders) {
-            order.setProducts(getOrdersProducts(order.getId()));
+            order.setProducts(getOrdersProducts(order.getOrderId()));
         }
     }
 }

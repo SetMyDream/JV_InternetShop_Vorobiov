@@ -19,25 +19,25 @@ public class Storage {
 
     public static void addProduct(Product product) {
         productId++;
-        product.setId(productId);
+        product.setProductId(productId);
         products.add(product);
     }
 
     public static void addOrder(Order order) {
         orderId++;
-        order.setId(orderId);
+        order.setOrderId(orderId);
         orders.add(order);
     }
 
     public static void addUser(User user) {
         userId++;
-        user.setId(userId);
+        user.setUserId(userId);
         users.add(user);
     }
 
     public static void addShoppingCart(ShoppingCart shoppingCart) {
         shoppingCartId++;
-        shoppingCart.setId(shoppingCartId);
+        shoppingCart.setShoppingCartId(shoppingCartId);
         shoppingCarts.add(shoppingCart);
     }
 

@@ -28,11 +28,11 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                product.setId(resultSet.getLong(1));
+                product.setProductId(resultSet.getLong(1));
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can`t add product with id = "
-                    + product.getId(), e);
+                    + product.getProductId(), e);
         }
         return product;
     }
@@ -79,12 +79,12 @@ public class ProductDaoJdbcImpl implements ProductDao {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
-            statement.setLong(3, product.getId());
+            statement.setLong(3, product.getProductId());
             statement.executeUpdate();
             return product;
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to update product with ID "
-                    + product.getId(), e);
+                    + product.getProductId(), e);
         }
     }
 

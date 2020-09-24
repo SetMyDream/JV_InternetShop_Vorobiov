@@ -17,21 +17,21 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> getById(Long id) {
         return getAll().stream()
-                .filter(user -> user.getId().equals(id))
+                .filter(user -> user.getUserId().equals(id))
                 .findFirst();
     }
 
     @Override
     public User update(User user) {
         IntStream.range(0, Storage.users.size())
-                .filter(i -> Storage.users.get(i).getId().equals(user.getId()))
+                .filter(i -> Storage.users.get(i).getUserId().equals(user.getUserId()))
                 .forEach(i -> Storage.users.set(i, user));
         return user;
     }
 
     @Override
     public boolean delete(Long id) {
-        return Storage.users.removeIf(user -> user.getId().equals(id));
+        return Storage.users.removeIf(user -> user.getUserId().equals(id));
     }
 
     @Override

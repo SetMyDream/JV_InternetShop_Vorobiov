@@ -35,7 +35,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             throw new DataProcessingException("Can't get shopping_cart with userId: " + userId, e);
         }
         if (cart != null) {
-            cart.setProducts(getShoppingCartProducts(cart.getId()));
+            cart.setProducts(getShoppingCartProducts(cart.getShoppingCartId()));
         }
         return Optional.ofNullable(cart);
     }
@@ -49,14 +49,14 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                shoppingCart.setId(generatedKeys.getLong(1));
+                shoppingCart.setShoppingCartId(generatedKeys.getLong(1));
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can't create ShoppingCart with id: "
-                    + shoppingCart.getId(), e);
+                    + shoppingCart.getShoppingCartId(), e);
         }
         for (Product product : shoppingCart.getProducts()) {
-            addDataToShoppingCartProductsTable(shoppingCart.getId(), product.getId());
+            addDataToShoppingCartProductsTable(shoppingCart.getShoppingCartId(), product.getProductId());
         }
         return shoppingCart;
     }
@@ -78,7 +78,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             throw new DataProcessingException("Can't get shopping_cart with id: " + id, e);
         }
         if (cart != null) {
-            cart.setProducts(getShoppingCartProducts(cart.getId()));
+            cart.setProducts(getShoppingCartProducts(cart.getShoppingCartId()));
         }
         return Optional.ofNullable(cart);
     }
@@ -88,11 +88,11 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         String deleteQuery = "DELETE FROM shopping_cart_products WHERE shopping_cart_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
-            statement.setLong(1, cart.getId());
+            statement.setLong(1, cart.getShoppingCartId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update ShoppingCart with id: "
-                    + cart.getId(), e);
+                    + cart.getShoppingCartId(), e);
         }
         return addProductsToShoppingCart(cart);
     }
@@ -125,7 +125,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             throw new DataProcessingException("Can't get shopping_carts", e);
         }
         for (ShoppingCart cart : carts) {
-            cart.setProducts(getShoppingCartProducts(cart.getId()));
+            cart.setProducts(getShoppingCartProducts(cart.getShoppingCartId()));
         }
         return carts;
     }
@@ -171,8 +171,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
                 connection.prepareStatement(insertQuery)) {
             for (Product product : cart.getProducts()) {
-                statement.setLong(1, cart.getId());
-                statement.setLong(2, product.getId());
+                statement.setLong(1, cart.getShoppingCartId());
+                statement.setLong(2, product.getProductId());
                 statement.executeUpdate();
             }
             return cart;
