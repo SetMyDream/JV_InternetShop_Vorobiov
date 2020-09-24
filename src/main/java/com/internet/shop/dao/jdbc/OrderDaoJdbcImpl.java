@@ -59,8 +59,18 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Order update(Order order) {
-        delete(order.getOrderId());
-        create(order);
+        String query = "UPDATE orders SET user_id = ? "
+                + "WHERE order_id = ? AND deleted = false;";
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, order.getUserId());
+            preparedStatement.setLong(2, order.getOrderId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't update order with id "
+                    + order.getOrderId(), e);
+        }
+        deleteOrderProducts(order.getOrderId());
         return order;
     }
 
