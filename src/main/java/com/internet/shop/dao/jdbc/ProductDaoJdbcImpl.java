@@ -38,18 +38,18 @@ public class ProductDaoJdbcImpl implements ProductDao {
     }
 
     @Override
-    public Optional<Product> getById(Long id) {
+    public Optional<Product> getById(Long productId) {
         String query = "SELECT * FROM products WHERE deleted = false AND product_id = ?";
         Product product = new Product(null, 0);
         try (Connection connection = ConnectionUtil.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
+            statement.setLong(1, productId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return Optional.ofNullable(getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to get product with ID " + id, e);
+            throw new DataProcessingException("Unable to get product with ID " + productId, e);
         }
         return Optional.empty();
     }
@@ -89,14 +89,14 @@ public class ProductDaoJdbcImpl implements ProductDao {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long productId) {
         String query = "UPDATE products SET deleted = TRUE WHERE product_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
+            statement.setLong(1, productId);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new DataProcessingException("Failed to delete product with ID " + id, e);
+            throw new DataProcessingException("Failed to delete product with ID " + productId, e);
         }
     }
 
