@@ -65,8 +65,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public boolean delete(Long id) {
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE orders "
-                     + "SET is_deleted = TRUE WHERE order_id = ?")) {
+                PreparedStatement statement = connection.prepareStatement("UPDATE orders "
+                        + "SET is_deleted = TRUE WHERE order_id = ?")) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -104,8 +104,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     private void addDataToOrdersProductTable(Long orderId, Long productId) {
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO "
+                PreparedStatement statement = connection
+                        .prepareStatement("INSERT INTO "
                              + "orders_products (order_id, product_id) VALUES(?,?)")) {
             statement.setLong(1, orderId);
             statement.setLong(2, productId);
