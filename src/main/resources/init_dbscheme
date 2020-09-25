@@ -8,7 +8,7 @@ CREATE TABLE `internet_shop`.`products`
     `price`      double       NOT NULL DEFAULT '0',
     `deleted`    tinyint      NOT NULL DEFAULT '0',
     PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 DEFAULT CHARACTER
 SET = utf8;
 
@@ -76,7 +76,7 @@ CREATE TABLE `internet_shop`.`user_roles`
 CREATE TABLE `internet_shop`.`users`
 (
     `user_id`  bigint       NOT NULL,
-    `username` varchar(256) NOT NULL DEFAULT 'No_name',
+    `username` varchar(256) NOT NULL,
     `login`    varchar(256) NOT NULL,
     `password` varchar(256) NOT NULL,
     `deleted`  tinyint      NOT NULL DEFAULT '0',

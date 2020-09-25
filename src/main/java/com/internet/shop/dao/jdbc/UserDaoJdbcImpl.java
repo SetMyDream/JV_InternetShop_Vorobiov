@@ -131,10 +131,11 @@ public class UserDaoJdbcImpl implements UserDao {
         return users;
     }
 
-    private void setValues(PreparedStatement ps, User user) throws SQLException {
-        ps.setString(1, user.getName());
-        ps.setString(2, user.getLogin());
-        ps.setString(3, user.getPassword());
+    private void setValues(PreparedStatement preparedStatement,
+                           User user) throws SQLException {
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getLogin());
+        preparedStatement.setString(3, user.getPassword());
     }
 
     private User conversionToUser(ResultSet resultSet) throws SQLException {

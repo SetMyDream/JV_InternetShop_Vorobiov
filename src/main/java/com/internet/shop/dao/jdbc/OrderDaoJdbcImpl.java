@@ -20,7 +20,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Order create(Order order) {
-        try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement =
                 connection.prepareStatement("INSERT INTO orders (user_id) VALUES(?)",
                         Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, order.getUserId());
@@ -42,9 +43,10 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public Optional<Order> getById(Long id) {
         Order order = null;
+        String query = "SELECT order_id, user_id FROM orders "
+                + "WHERE order_id = ? AND deleted = FALSE ";
         try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
-                connection.prepareStatement("SELECT order_id, user_id FROM orders "
-                        + "WHERE order_id = ? AND is_deleted = FALSE ")) {
+                connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -71,7 +73,6 @@ public class OrderDaoJdbcImpl implements OrderDao {
             throw new DataProcessingException("Can't update order with id "
                     + order.getOrderId(), e);
         }
-        deleteOrderProducts(order.getOrderId());
         return order;
     }
 
@@ -79,27 +80,26 @@ public class OrderDaoJdbcImpl implements OrderDao {
     public boolean delete(Long id) {
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement("UPDATE orders "
-                        + "SET is_deleted = TRUE WHERE order_id = ?")) {
+                        + "SET deleted = TRUE WHERE order_id = ?")) {
             statement.setLong(1, id);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't delete Order with id: " + id, e);
         }
-        return deleteOrderProducts(id);
     }
 
     @Override
     public List<Order> getAll() {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
-                connection.prepareStatement("SELECT * FROM orders WHERE is_deleted = FALSE")) {
+                connection.prepareStatement("SELECT * FROM orders WHERE deleted = FALSE")) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orders.add(new Order(resultSet.getLong("order_id"),
                         resultSet.getLong("user_id")));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't add data to Orders_Product", e);
+            throw new DataProcessingException("Can't get all orders", e);
         }
         setProductsToOrders(orders);
         return orders;
@@ -150,7 +150,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
                 connection.prepareStatement("SELECT * FROM products p JOIN "
                         + "orders_products op ON op.product_id = p.product_id "
-                        + "WHERE order_id = ? AND is_deleted = FALSE")) {
+                        + "WHERE order_id = ? AND deleted = FALSE")) {
             statement.setLong(1, orderId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -163,17 +163,6 @@ public class OrderDaoJdbcImpl implements OrderDao {
             return products;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't get Order Products", e);
-        }
-    }
-
-    public boolean deleteOrderProducts(Long orderId) {
-        String deleteQuery = "DELETE FROM orders_products WHERE order_id = ?";
-        try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
-            statement.setLong(1, orderId);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete Order with id: " + orderId, e);
         }
     }
 
