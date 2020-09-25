@@ -21,8 +21,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public Order create(Order order) {
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement =
-                connection.prepareStatement("INSERT INTO orders (user_id) VALUES(?)",
+                PreparedStatement statement =
+                        connection.prepareStatement("INSERT INTO orders (user_id) VALUES(?)",
                         Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, order.getUserId());
             statement.executeUpdate();
