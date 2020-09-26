@@ -186,7 +186,7 @@ public class UserDaoJdbcImpl implements UserDao {
             if (resultSet.next()) {
                 return resultSet.getLong("role_id");
             }
-            return null;
+            return -1L;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't get role by roleName: " + roleName, e);
         }
