@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +23,13 @@ public class OrderDaoJdbcImpl implements OrderDao {
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement =
                         connection.prepareStatement("INSERT INTO orders (user_id) VALUES(?)",
-                        Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, order.getUserId());
+                             Statement.RETURN_GENERATED_KEYS)) {
+            ((PreparedStatement) statement).setLong(1, order.getUserId());
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 order.setOrderId(generatedKeys.getLong(1));
             }
-            List<Long> productIds = new LinkedList<>();
             addDataToOrdersProductTable(order.getOrderId(), order.getProducts(), connection);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't create Order with id: "
@@ -68,11 +66,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
             preparedStatement.setLong(1, order.getUserId());
             preparedStatement.setLong(2, order.getOrderId());
             preparedStatement.executeUpdate();
-            updateOrdersProducts(order.getOrderId(), order.getProducts());
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update order with id "
                     + order.getOrderId(), e);
         }
+        updateOrdersProducts(order.getOrderId(), order.getProducts());
         return order;
     }
 
@@ -129,17 +127,13 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     private void addDataToOrdersProductTable(Long orderId, List<Product> products,
                                              Connection connection) throws SQLException {
-        List<Long> productIds = new LinkedList<>();
-        for (Product product : products) {
-            productIds.add(product.getProductId());
-        }
         String query = "INSERT INTO "
                 + "orders_products (order_id, product_id) VALUES(?,?)";
         PreparedStatement statement = connection
-                        .prepareStatement(query);
-        for (Long productId : productIds) {
+                .prepareStatement(query);
+        for (Product product : products) {
             statement.setLong(1, orderId);
-            statement.setLong(2, productId);
+            statement.setLong(2, product.getProductId());
             statement.executeUpdate();
         }
     }
@@ -172,8 +166,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 PreparedStatement statement = connection.prepareStatement(deleteQuery);) {
             statement.setLong(1, orderId);
             statement.executeUpdate();
+            statement.close();
             addDataToOrdersProductTable(orderId, products, connection);
-
         } catch (SQLException e) {
             throw new DataProcessingException("Can't get Order Products", e);
         }
