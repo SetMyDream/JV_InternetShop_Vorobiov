@@ -1,7 +1,7 @@
 package com.internet.shop.model;
 
 public class Product {
-    private Long id;
+    private Long productId;
     private String name;
     private Double price;
     private boolean deleted;
@@ -9,7 +9,7 @@ public class Product {
     public Product(String name, double price, Long productId, boolean deleted) {
         this.name = name;
         this.price = price;
-        this.id = productId;
+        this.productId = productId;
         this.deleted = deleted;
     }
 
@@ -26,12 +26,12 @@ public class Product {
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -53,7 +53,7 @@ public class Product {
     @Override
     public String toString() {
         return "\nProduct{"
-                + "id=" + id
+                + "id=" + productId
                 + ", name='" + name + '\''
                 + ", price=" + price + "}\n";
     }

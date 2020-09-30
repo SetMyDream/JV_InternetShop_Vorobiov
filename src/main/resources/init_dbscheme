@@ -3,11 +3,83 @@ CREATE DATABASE `internet_shop`
 
 CREATE TABLE `internet_shop`.`products`
 (
-    `product_id`   BIGINT(11)   NOT NULL AUTO_INCREMENT,
-    `product_name` VARCHAR(225) NOT NULL DEFAULT 'product',
-    `price`        DOUBLE       NOT NULL DEFAULT 0.00,
-    `deleted`      TINYINT      NOT NULL DEFAULT 0,
+    `product_id` bigint       NOT NULL AUTO_INCREMENT,
+    `name`       varchar(256) NOT NULL DEFAULT 'product',
+    `price`      double       NOT NULL DEFAULT '0',
+    `deleted`    tinyint      NOT NULL DEFAULT '0',
     PRIMARY KEY (`product_id`)
-) ENGINE = InnoDB
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 DEFAULT CHARACTER
 SET = utf8;
+
+CREATE TABLE `internet_shop`.`orders`
+(
+    `order_id` bigint  NOT NULL AUTO_INCREMENT,
+    `deleted`  tinyint NOT NULL DEFAULT '0',
+    `user_id`  bigint  NOT NULL,
+    PRIMARY KEY (`order_id`),
+    KEY `orders_users_fk_idx` (`user_id`),
+    CONSTRAINT `orders_users_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `internet_shop`.`orders_products`
+(
+    `order_id`   bigint NOT NULL,
+    `product_id` bigint NOT NULL,
+    KEY `to_order_idx` (`order_id`),
+    KEY `to_product_idx` (`product_id`),
+    CONSTRAINT `to_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+    CONSTRAINT `to_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `internet_shop`.`products`
+(
+
+
+    CREATE TABLE `internet_shop`.`roles` (
+        `role_id` bigint NOT NULL AUTO_INCREMENT,
+        `role_name` varchar (256) NOT NULL,
+        `deleted` tinyint NOT NULL DEFAULT '0',
+        PRIMARY KEY (`role_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `internet_shop`.`shopping_cart_products`
+(
+    `shopping_cart_id` bigint NOT NULL,
+    `product_id`       bigint NOT NULL,
+    KEY `to_shopping_cart_idx` (`shopping_cart_id`),
+    KEY `to_product_idx` (`product_id`),
+    CONSTRAINT `product_to_shopping_cart` FOREIGN KEY (`shopping_cart_id`) REFERENCES `shopping_carts` (`shopping_carts_id`),
+    CONSTRAINT `shopping_cart_to_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `internet_shop`.`shopping_carts`
+(
+    `shopping_carts_id` bigint  NOT NULL AUTO_INCREMENT,
+    `user_id`           bigint  NOT NULL,
+    `deleted`           tinyint NOT NULL DEFAULT '0',
+    PRIMARY KEY (`shopping_carts_id`),
+    KEY `shopping_cart_user_idx` (`user_id`),
+    CONSTRAINT `shopping_cart_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `internet_shop`.`user_roles`
+(
+    `user_id` bigint NOT NULL,
+    `role_id` bigint NOT NULL,
+    KEY `role_to_user_idx` (`user_id`),
+    KEY `user_to_role_idx` (`role_id`),
+    CONSTRAINT `role_to_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+    CONSTRAINT `user_to_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `internet_shop`.`users`
+(
+    `user_id`  bigint       NOT NULL,
+    `username` varchar(256) NOT NULL,
+    `login`    varchar(256) NOT NULL,
+    `password` varchar(256) NOT NULL,
+    `deleted`  tinyint      NOT NULL DEFAULT '0',
+    PRIMARY KEY (`user_id`),
+    UNIQUE KEY `login_UNIQUE` (`login`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

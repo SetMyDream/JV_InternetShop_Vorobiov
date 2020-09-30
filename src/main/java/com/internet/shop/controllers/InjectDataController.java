@@ -41,11 +41,11 @@ public class InjectDataController extends HttpServlet {
         Product samsungS9 = new Product("Samsung S9", 500);
         productService.create(samsungS9);
 
-        ShoppingCart aliceShoppingCart = new ShoppingCart(alice.getId());
+        ShoppingCart aliceShoppingCart = new ShoppingCart(alice.getUserId());
         shoppingCartService.create(aliceShoppingCart);
-        ShoppingCart johnShoppingCart = new ShoppingCart(john.getId());
+        ShoppingCart johnShoppingCart = new ShoppingCart(john.getUserId());
         shoppingCartService.create(johnShoppingCart);
-        ShoppingCart todShoppingCart = new ShoppingCart(tod.getId());
+        ShoppingCart todShoppingCart = new ShoppingCart(tod.getUserId());
         shoppingCartService.create(todShoppingCart);
 
         req.getRequestDispatcher("/WEB-INF/views/inject.jsp").forward(req, resp);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private Long id;
+    private Long orderId;
     private Long userId;
     private List<Product> products;
 
@@ -13,12 +13,18 @@ public class Order {
         products = new ArrayList<>();
     }
 
-    public Long getId() {
-        return id;
+    public Order(Long orderId, Long userId) {
+        this.orderId = orderId;
+        this.userId = userId;
+        products = new ArrayList<>();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Long getUserId() {
@@ -39,7 +45,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id
+        return "Order{" + "id=" + orderId
                 + ", userId=" + userId
                 + ", products=" + products + '}';
     }

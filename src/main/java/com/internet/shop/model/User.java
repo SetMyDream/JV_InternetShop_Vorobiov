@@ -1,10 +1,13 @@
 package com.internet.shop.model;
 
+import java.util.Set;
+
 public class User {
-    private Long id;
+    private Long userId;
     private String name;
     private String login;
     private String password;
+    private Set<Role> roles;
 
     public User(String name, String login, String password) {
         this.name = name;
@@ -12,12 +15,19 @@ public class User {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
+    public User(Long id, String name, String login, String password) {
+        this.userId = id;
+        this.name = name;
+        this.login = login;
+        this.password = password;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -44,9 +54,17 @@ public class User {
         this.password = password;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id
+        return "User{" + "id=" + userId
                 + ", name='" + name + '\'' + ", login='" + login + '\''
                 + ", password='" + password + '\'' + '}';
     }

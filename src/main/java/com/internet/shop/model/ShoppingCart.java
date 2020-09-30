@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    private Long id;
+    private Long shoppingCartId;
     private Long userId;
     private List<Product> products;
 
@@ -13,12 +13,18 @@ public class ShoppingCart {
         products = new ArrayList<>();
     }
 
-    public Long getId() {
-        return id;
+    public ShoppingCart(Long shoppingCartId, Long userId) {
+        this.userId = userId;
+        this.shoppingCartId = shoppingCartId;
+        products = new ArrayList<>();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getShoppingCartId() {
+        return shoppingCartId;
+    }
+
+    public void setShoppingCartId(Long shoppingCartId) {
+        this.shoppingCartId = shoppingCartId;
     }
 
     public Long getUserId() {
@@ -40,7 +46,7 @@ public class ShoppingCart {
     @Override
     public String toString() {
         return "ShoppingCart{"
-                + "id=" + id + ", userId=" + userId
+                + "id=" + shoppingCartId + ", userId=" + userId
                 + ", products=" + products + '}';
     }
 }
