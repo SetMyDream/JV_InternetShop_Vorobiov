@@ -6,16 +6,20 @@ public class Product {
     private Double price;
     private boolean deleted;
 
-    public Product(String name, double price, Long productId, boolean deleted) {
+    public Product(Long productId, String name, double price) {
         this.name = name;
-        this.price = price;
         this.id = productId;
-        this.deleted = deleted;
+        this.price = price;
     }
 
     public Product(String name, double price) {
         this.name = name;
         this.price = price;
+    }
+
+    public Product(Long id, String name, Double price, boolean deleted) {
+        this(id, name, price);
+        this.deleted = deleted;
     }
 
     public boolean isDeleted() {

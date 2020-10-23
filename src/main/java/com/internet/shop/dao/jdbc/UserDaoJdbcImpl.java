@@ -25,7 +25,7 @@ public class UserDaoJdbcImpl implements UserDao {
         String selectQuery = "SELECT * FROM users WHERE login = ? AND deleted = FALSE";
         User user = null;
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -66,7 +66,7 @@ public class UserDaoJdbcImpl implements UserDao {
         String updateQuery = "UPDATE users SET username = ?, login = ?, password = ? "
                 + "WHERE user_id = ? AND deleted = FALSE";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+                PreparedStatement statement = connection.prepareStatement(updateQuery)) {
             setValues(statement, user);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -84,7 +84,7 @@ public class UserDaoJdbcImpl implements UserDao {
         String selectQuery = "SELECT * FROM users WHERE user_id = ? AND deleted = FALSE";
         User user = null;
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -103,7 +103,7 @@ public class UserDaoJdbcImpl implements UserDao {
     public boolean delete(Long id) {
         String updateQuery = "UPDATE users SET deleted = TRUE WHERE user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(updateQuery)) {
+                PreparedStatement statement = connection.prepareStatement(updateQuery)) {
             statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -116,7 +116,7 @@ public class UserDaoJdbcImpl implements UserDao {
         String selectQuery = "SELECT * FROM users WHERE deleted = FALSE";
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = conversionToUser(resultSet);
@@ -148,7 +148,7 @@ public class UserDaoJdbcImpl implements UserDao {
     private void addUserRoles(long userId, long roleId) {
         String insertQuery = "INSERT INTO user_roles (user_id, role_id) VALUES(?,?)";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(insertQuery)) {
+                PreparedStatement statement = connection.prepareStatement(insertQuery)) {
             statement.setLong(1, userId);
             statement.setLong(2, roleId);
             statement.executeUpdate();
@@ -162,7 +162,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 + "INNER JOIN user_roles ur ON r.role_id = ur.role_id WHERE ur.user_id = ?";
         Set<Role> roles = new HashSet<>();
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -179,7 +179,7 @@ public class UserDaoJdbcImpl implements UserDao {
     private Long getRoleByRoleName(String roleName) {
         String selectQuery = "SELECT role_id FROM roles WHERE role_name = ?";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(selectQuery)) {
+                PreparedStatement statement = connection.prepareStatement(selectQuery)) {
             statement.setString(1, roleName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -194,7 +194,7 @@ public class UserDaoJdbcImpl implements UserDao {
     private void deleteUserRole(Long userId) {
         String deleteQuery = "DELETE FROM user_roles WHERE user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
+                PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
             statement.setLong(1, userId);
             statement.executeUpdate();
         } catch (SQLException e) {

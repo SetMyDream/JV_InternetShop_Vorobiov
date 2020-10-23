@@ -17,139 +17,165 @@ import java.util.Optional;
 
 @Dao
 public class OrderDaoJdbcImpl implements OrderDao {
+    @Override
+    public List<Order> getUserOrders(Long userId) {
+        List<Order> userOrders = new ArrayList<>();
+        String query = "SELECT order_id, user_id FROM orders WHERE deleted = FALSE AND user_id = ?";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                userOrders.add(getOrderFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't get orders for user id " + userId, e);
+        }
+        for (Order order : userOrders) {
+            order.setProducts(getOrdersProducts(order.getId()));
+        }
+        return userOrders;
+    }
 
     @Override
     public Order create(Order order) {
-        try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
-                connection.prepareStatement("INSERT INTO orders (user_id) VALUES(?)",
+        String query = "INSERT INTO orders(user_id) VALUES (?)";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, order.getUserId());
             statement.executeUpdate();
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                order.setId(generatedKeys.getLong(1));
+            ResultSet resultSet = statement.getGeneratedKeys();
+            while (resultSet.next()) {
+                order.setId(resultSet.getLong(1));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't create Order with id: " + order.getId(), e);
+            throw new DataProcessingException("Can't create order " + order.toString(), e);
         }
-        for (Product product : order.getProducts()) {
-            addDataToOrdersProductTable(order.getId(), product.getId());
-        }
+        createOrdersProducts(order);
         return order;
     }
 
     @Override
     public Optional<Order> getById(Long id) {
-        Order order = null;
-        try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
-                connection.prepareStatement("SELECT order_id, user_id FROM orders "
-                        + "WHERE order_id = ? AND is_deleted = FALSE ")) {
+        Order order;
+        String query = "SELECT order_id, user_id FROM orders WHERE deleted = FALSE "
+                + "AND order_id = ?";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                order = new Order(resultSet.getLong("order_id"),
-                        resultSet.getLong("user_id"));
+                order = getOrderFromResultSet(resultSet);
+            } else {
+                return Optional.empty();
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't get Order with id: " + id, e);
+            throw new DataProcessingException("Can't get order with id " + id, e);
         }
-        order.setProducts(getOrdersProducts(order.getId()));
+        order.setProducts(getOrdersProducts(id));
         return Optional.of(order);
     }
 
     @Override
     public Order update(Order order) {
-        return null;
+        String query = "UPDATE orders SET user_id = ? WHERE order_id = ? AND deleted = FALSE";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, order.getUserId());
+            statement.setLong(2, order.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't update order with id " + order.getId(), e);
+        }
+        deleteOrdersProducts(order);
+        createOrdersProducts(order);
+        return order;
     }
 
     @Override
     public boolean delete(Long id) {
+        String query = "UPDATE orders SET deleted = TRUE WHERE order_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE orders "
-                     + "SET is_deleted = TRUE WHERE order_id = ?")) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            statement.executeUpdate();
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete Order with id: " + id, e);
+            throw new DataProcessingException("Can't delete order with id " + id, e);
         }
-        return deleteOrderProducts(id);
     }
 
     @Override
     public List<Order> getAll() {
         List<Order> orders = new ArrayList<>();
-        try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
-                connection.prepareStatement("SELECT * FROM orders WHERE is_deleted = FALSE")) {
+        String query = "SELECT order_id, user_id FROM orders WHERE deleted = FALSE";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                orders.add(new Order(resultSet.getLong("order_id"),
-                        resultSet.getLong("user_id")));
+                Order order = getOrderFromResultSet(resultSet);
+                orders.add(order);
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't add data to Orders_Product", e);
+            throw new DataProcessingException("Can't get all orders", e);
         }
-        setProductsToOrders(orders);
+        for (Order order : orders) {
+            order.setProducts(getOrdersProducts(order.getId()));
+        }
         return orders;
     }
 
-    @Override
-    public List<Order> getUserOrders(Long userId) {
-        return null;
+    private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("order_id");
+        Long userId = resultSet.getLong("user_id");
+        return new Order(id,userId);
     }
 
-    @Override
-    public Optional<Order> getByUserId(Long id) {
-        return Optional.empty();
-    }
-
-    private void addDataToOrdersProductTable(Long orderId, Long productId) {
+    private List<Product> getOrdersProducts(Long orderId) {
+        String query = "SELECT p.product_id, p.name, p.price FROM orders_products op "
+                + "JOIN products p on p.product_id = op.product_id AND p.deleted = FALSE "
+                + "AND op.deleted = FALSE WHERE op.order_id = ?";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement("INSERT INTO "
-                             + "orders_products (order_id, product_id) VALUES(?,?)")) {
-            statement.setLong(1, orderId);
-            statement.setLong(2, productId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't add data to Orders_Product", e);
-        }
-    }
-
-    private List<Product> getOrdersProducts(long orderId) {
-        List<Product> products = new ArrayList<>();
-        try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement statement =
-                connection.prepareStatement("SELECT * FROM products p JOIN "
-                        + "orders_products op ON op.product_id = p.product_id "
-                        + "WHERE order_id = ? AND is_deleted = FALSE")) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, orderId);
             ResultSet resultSet = statement.executeQuery();
+            List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
-                products.add(new Product(resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getLong("product_id"),
-                        resultSet.getBoolean("deleted")));
+                Long productId = resultSet.getLong("product_id");
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                products.add(new Product(productId, name, price));
             }
-
             return products;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't get Order Products", e);
+            throw new DataProcessingException("Can't get products for order id " + orderId, e);
         }
     }
 
-    public boolean deleteOrderProducts(Long orderId) {
-        String deleteQuery = "DELETE FROM orders_products WHERE order_id = ?";
+    private void createOrdersProducts(Order order) {
+        String query = "INSERT INTO orders_products(order_id, product_id) VALUES(?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(deleteQuery)) {
-            statement.setLong(1, orderId);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, order.getId());
+            for (Product product : order.getProducts()) {
+                statement.setLong(2, product.getId());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't create products for order id "
+                    + order.getId(), e);
+        }
+    }
+
+    private boolean deleteOrdersProducts(Order order) {
+        String query = "UPDATE orders_products SET deleted = TRUE WHERE order_id = ?";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, order.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete Order with id: " + orderId, e);
-        }
-    }
-
-    private void setProductsToOrders(List<Order> orders) {
-        for (Order order : orders) {
-            order.setProducts(getOrdersProducts(order.getId()));
+            throw new DataProcessingException("Can't delete products for order id "
+                    + order.getId(), e);
         }
     }
 }

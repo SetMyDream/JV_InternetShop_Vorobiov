@@ -38,18 +38,18 @@ public class ProductDaoJdbcImpl implements ProductDao {
     }
 
     @Override
-    public Optional<Product> getById(Long productId) {
+    public Optional<Product> getById(Long id) {
         String query = "SELECT * FROM products WHERE deleted = false AND product_id = ?";
         Product product = new Product(null, 0);
         try (Connection connection = ConnectionUtil.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, productId);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return Optional.ofNullable(getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to get product with ID " + productId, e);
+            throw new DataProcessingException("Unable to get product with ID " + id, e);
         }
         return Optional.empty();
     }
@@ -89,14 +89,14 @@ public class ProductDaoJdbcImpl implements ProductDao {
     }
 
     @Override
-    public boolean delete(Long productId) {
+    public boolean delete(Long id) {
         String query = "UPDATE products SET deleted = TRUE WHERE product_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, productId);
+            statement.setLong(1, id);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new DataProcessingException("Failed to delete product with ID " + productId, e);
+            throw new DataProcessingException("Failed to delete product with ID " + id, e);
         }
     }
 
@@ -106,6 +106,6 @@ public class ProductDaoJdbcImpl implements ProductDao {
         String name = resultSet.getString("name");
         double price = resultSet.getDouble("price");
         boolean deleted = resultSet.getBoolean("deleted");
-        return new Product(name, price, productId, deleted);
+        return new Product(productId, name, price, deleted);
     }
 }
