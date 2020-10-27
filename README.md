@@ -65,4 +65,6 @@ the application is working.
 
 6. To login as admin use login: admin and password: admin. 
 
-my GitHub profile: https://github.com/SetMyDream
+## Author
+
+[Artem Vorobiov](https://github.com/SetMyDream)
