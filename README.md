@@ -8,8 +8,10 @@ User capabilities:
 - choosing the necessary product;
 - shopping cart managing;
 - placing orders;
+- view orders history;
 
 Admin capabilities:
+- managing users;
 - managing products;
 - view orders and manage it;
 
@@ -47,14 +49,6 @@ Admin capabilities:
 - The Service layer is responsible for processing information and modifying it 
   in the process of user interaction with the application.
 
-##### The following web filters have been implemented:
-
-- Authentication filter - is responsible for admitting only 
-  registered users to the system.
-
-- Authorization filter - ensures that the user cannot access 
-  information that does not correspond to his role.
-
 ## Project launching
 
 1. To run the project on your local machine, clone this repository. 
@@ -67,4 +61,8 @@ RDBMS on your machine.
 4. Set up your schema's password and user's login in the ConnectionUtil class. 
 
 5. If you have performed all the steps correctly, and your server is active, 
-the application supposed to work.
+the application is working.
+
+6. To login as admin use login: admin and password: admin. 
+
+my GitHub profile: https://github.com/SetMyDream
